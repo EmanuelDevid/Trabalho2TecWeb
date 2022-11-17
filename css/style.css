@@ -1,0 +1,96 @@
+@font-face {
+    font-family: "Game";
+    src: url("/font/rare_game/Rare\ Game.otf") format("truetype");
+}
+
+@font-face {
+    font-family: "Comic";
+    src: url("/font/sf_slapstick_comic/SF\ Slapstick\ Comic\ Bold\ Oblique.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    padding: 10px auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: blueviolet;
+    color: white;
+    height: 100vh;
+    font-family: "Comic";
+}
+
+.title {
+    font-size: 50px;
+}
+
+.subtitle1 {
+    color: rgb(255, 145, 0);
+    text-shadow: #000 6px 6px 0;
+}
+.subtitle2 {
+    color: yellow;
+    text-shadow: #000 6px 6px 0;
+}
+
+#game-area {
+    background-color: rgb(0, 162, 255);
+    height: 550px;
+    width: 1100px;
+    position: relative;
+    overflow: hidden;
+    border-color: #000;
+    border-style: dashed;
+    border-width: 5px;
+    margin-bottom: 20px;
+}
+
+.luffy,
+.luffy-left {
+    position: absolute;
+    width: 80px;
+    bottom: 0;
+}
+
+.luffy-left {
+    transform: scaleX(-1);
+}
+
+.progresso {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 60px;
+    z-index: 100;
+    font-family: "Game";
+}
+
+.carne {
+    width: 55px;
+    position: absolute;
+}
+
+.carne-some {
+    width: 0;
+}
+
+.barra-energia {
+    width: 104px;
+    height: 30px;
+    background-color: antiquewhite;
+    margin: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.progresso-energia {
+    background-color: rgb(255, 145, 0);
+    height: 100%;
+    border-radius: 8px;
+}
