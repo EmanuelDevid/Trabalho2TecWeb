@@ -40,8 +40,8 @@
 }
 
 #game-area {
-    background-color: rgb(0, 162, 255);
-    height: 550px;
+    background-color: greenyellow;
+    height: 600px;
     width: 1100px;
     position: relative;
     overflow: hidden;
@@ -54,7 +54,7 @@
 .luffy,
 .luffy-left {
     position: absolute;
-    width: 80px;
+    width: 70px;
     bottom: 0;
 }
 
@@ -81,6 +81,8 @@
 }
 
 .barra-energia {
+    position: absolute;
+    top: 0px;
     width: 104px;
     height: 30px;
     background-color: antiquewhite;
@@ -90,7 +92,21 @@
 }
 
 .progresso-energia {
+    position: absolute;
     background-color: rgb(255, 145, 0);
     height: 100%;
     border-radius: 8px;
+}
+
+.obstaculo {
+    background-color: rgb(0, 174, 255);
+    height: 50px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.linha-obstaculo {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
 }
