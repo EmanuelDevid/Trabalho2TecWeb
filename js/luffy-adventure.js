@@ -100,28 +100,32 @@ function Luffy() {
     };
 }
 
-function Obstaculo () {
+function Obstaculo() {
     this.elemento = novoElemento("div", "obstaculo");
 
     this.setLargura = (largura) => {
-        this.elemento.style.width = `${largura}px`
-    }
+        if(largura === 0){
+            this.elemento.style.display = "none";
+        }else {
+            this.elemento.style.width = `${largura}px`;
+        }
+    };
 }
 
 function LinhaDeObstaculos(posicaoNaTela) {
     this.elemento = novoElemento("div", "linha-obstaculo");
-    const obstaculo1 = new Obstaculo();
-    const obstaculo2 = new Obstaculo();
-    const obstaculo3 = new Obstaculo();
+    this.obstaculo1 = new Obstaculo();
+    this.obstaculo2 = new Obstaculo();
+    this.obstaculo3 = new Obstaculo();
 
-    this.elemento.appendChild(obstaculo1.elemento);
-    this.elemento.appendChild(obstaculo2.elemento);
-    this.elemento.appendChild(obstaculo3.elemento);
+    this.elemento.appendChild(this.obstaculo1.elemento);
+    this.elemento.appendChild(this.obstaculo2.elemento);
+    this.elemento.appendChild(this.obstaculo3.elemento);
 
     this.getY = () => {
         return parseInt(this.elemento.style.bottom.split("px")[0]);
     };
-    
+
     this.setY = (posicaoNaTela) => {
         this.elemento.style.bottom = `${posicaoNaTela}px`;
     };
@@ -129,10 +133,10 @@ function LinhaDeObstaculos(posicaoNaTela) {
     this.setY(posicaoNaTela);
 
     this.larguraObstaculos = (largura1, largura2, largura3) => {
-        obstaculo1.setLargura(largura1);
-        obstaculo2.setLargura(largura2);
-        obstaculo3.setLargura(largura3);
-    }
+        this.obstaculo1.setLargura(largura1);
+        this.obstaculo2.setLargura(largura2);
+        this.obstaculo3.setLargura(largura3);
+    };
 }
 
 function Cenarios(posicaoNaTela) {
@@ -148,50 +152,100 @@ function Cenarios(posicaoNaTela) {
         new LinhaDeObstaculos(posicaoNaTela),
         new LinhaDeObstaculos(posicaoNaTela),
         new LinhaDeObstaculos(posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(2 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(3 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(4 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
+        new LinhaDeObstaculos(5 * posicaoNaTela),
     ];
-
-    this.passagemEsquerda = () => {
-        let largura1 = 200;
-        let largura2 = 550;
-        let increment = 50;
-        this.rows.forEach( row => {
-            row.larguraObstaculos(largura1, 0, largura2);
-            row.setY(row.getY() - 2);
-            largura1 += increment;
-            largura2 -= increment;
-
-            if(row.getY() < -600){
-                row.setY(700);
-            }
-        })
-    }
 
     this.passagemDireita = () => {
         let largura1 = 550;
         let largura2 = 200;
         let increment = 50;
-        this.rows.forEach(row => {
-            row.larguraObstaculos(largura1, 0, largura2);
-            row.setY(row.getY() - 2);
-            largura1 -= increment;
-            largura2 += increment;
+        this.rows.forEach((row, index) => {
+            if (index <= 10) {
+                row.larguraObstaculos(largura1, 0, largura2);
+                row.setY(row.getY() - 2);
+                largura1 -= increment;
+                largura2 += increment;
 
-            if(row.getY() < -600){
-                row.setY(700);
+                if (row.getY() < -6 * 660) {
+                    row.setY(660);
+                }
             }
         });
-    }
+    };
+
+    this.passagemEsquerda = () => {
+        let largura1 = 200;
+        let largura2 = 550;
+        let increment = 50;
+        this.rows.forEach((row, index) => {
+            if (index > 10 && index <= 21) {
+                row.larguraObstaculos(largura1, 0, largura2);
+                row.setY(row.getY() - 2);
+                largura1 += increment;
+                largura2 -= increment;
+
+                if (row.getY() < -5 * 660) {
+                    row.setY(2 * 660);
+                }
+            }
+        });
+    };
 
     this.passagemLivre = () => {
-        this.rows.forEach(row => {
-            row.larguraObstaculos(250, 0, 250);
-            row.setY(row.getY() - 2);
+        this.rows.forEach((row, index) => {
+            if (index > 21 && index <= 32) {
+                row.larguraObstaculos(250, 0, 250);
+                row.setY(row.getY() - 2);
 
-            if(row.getY() < -600){
-                row.setY(700);
+                if (row.getY() < -4 * 660) {
+                    row.setY(3 * 660);
+                }
             }
-        })
-    }
+        });
+    };
 
     this.bifurcacao = () => {
         let largura1 = 300;
@@ -199,30 +253,47 @@ function Cenarios(posicaoNaTela) {
         let increment = 40;
         let newLargura = 50;
         this.rows.forEach((row, index) => {
-            if(index > 7){
-                row.larguraObstaculos(largura1, 0, largura1);
-                largura1 += increment;
-            }else {
-                row.larguraObstaculos(newLargura, largura3, newLargura);
-                newLargura += 30;
-                largura3 -= 60;
-            }
+            if (index > 32 && index <= 43) {
+                if (index > 40) {
+                    row.larguraObstaculos(largura1, 0, largura1);
+                    largura1 += increment;
+                } else {
+                    row.larguraObstaculos(newLargura, largura3, newLargura);
+                    newLargura += 30;
+                    largura3 -= 60;
+                }
 
-            row.setY(row.getY() -2);
+                row.setY(row.getY() - 2);
 
-            if(row.getY() < -600){
-                row.setY(700);
+                if (row.getY() < -3 * 660) {
+                    row.setY(4 * 660);
+                }
             }
         });
-    }
-}
+    };
 
-const areaDoJogo = document.querySelector("#game-area");
-const cenario = new Cenarios(600);
-cenario.rows.forEach((row) => {areaDoJogo.appendChild(row.elemento)})
-setInterval(() => {
-    cenario.passagemDireita();
-}, 15);
+    this.zigZag = () => {
+        this.rows.forEach((row, index) => {
+            if (index > 43) {
+                if (index === 54) {
+                    row.larguraObstaculos(550, 0, 400);
+                } else if (index === 48) {
+                    row.larguraObstaculos(500, 0, 400);
+                } else if (index === 44 || index === 51) {
+                    row.larguraObstaculos(300, 0, 580);
+                } else {
+                    row.larguraObstaculos(300, 0, 400);
+                }
+
+                row.setY(row.getY() - 2);
+
+                if (row.getY() < -2 * 660) {
+                    row.setY(5 * 660);
+                }
+            }
+        });
+    };
+}
 
 function estaoSobrepostos(elementoA, elementoB) {
     const a = elementoA.getBoundingClientRect();
@@ -240,12 +311,37 @@ function luffyAdventure() {
     const progresso = new Progresso();
     const barraEnergia = new BarraEnergia();
     const carne = new Carne();
+    const cenario = new Cenarios(1500);
 
     areaDoJogo.appendChild(luffy.elemento);
     areaDoJogo.appendChild(progresso.elemento);
     areaDoJogo.appendChild(barraEnergia.elemento);
+    cenario.rows.forEach((row) => {
+        areaDoJogo.appendChild(row.elemento);
+    });
 
     this.start = () => {
+        const cenarioAnimacao = setInterval(() => {
+            cenario.passagemDireita();
+            cenario.passagemEsquerda();
+            cenario.passagemLivre();
+            cenario.bifurcacao();
+            cenario.zigZag();
+            
+            cenario.rows.forEach((row) => {
+                if (
+                    barraEnergia.getEnergia() === 0 ||
+                    estaoSobrepostos(luffy.elemento, row.obstaculo1.elemento) ||
+                    estaoSobrepostos(luffy.elemento, row.obstaculo2.elemento) ||
+                    estaoSobrepostos(luffy.elemento, row.obstaculo3.elemento)
+                ) {
+                    clearInterval(cenarioAnimacao);
+                    barraEnergia.setEnergia(0);
+                    luffy.elemento.className = "luffy-some";
+                }
+            });
+        }, 15);
+
         const carnePosition = setInterval(() => {
             carne.elemento.className = "carne";
             areaDoJogo.appendChild(carne.elemento);
@@ -276,7 +372,7 @@ function luffyAdventure() {
             if (barraEnergia.getEnergia() === 0) {
                 clearInterval(game);
             }
-        }, 150);
+        }, 200);
     };
 }
 
