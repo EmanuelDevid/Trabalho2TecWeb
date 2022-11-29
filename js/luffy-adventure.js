@@ -28,18 +28,25 @@ function BarraEnergia() {
 }
 
 function Progresso() {
-    this.elemento = novoElemento("span", "progresso");
+    this.elemento = novoElemento("span", "progresso")
+    this.pontos = -1;
+    
+    this.atualizarPontos = () => {
+        this.pontos+=1;
+        this.elemento.innerHTML = this.pontos;
+    }
+    
+    this.getPontuacao = () => {
+        return this.pontos;
+    }
 
-    this.atualizarPontos = (pontos) => {
-        this.elemento.innerHTML = pontos;
-    };
-
-    this.atualizarPontos(0);
+    this.atualizarPontos();
 }
 
 function Carne() {
     this.elemento = novoElemento("img", "carne");
     this.elemento.src = "./img/carne.png";
+    this.numCarne = 0;
 
     this.getX = () => {
         return parseInt(this.elemento.style.left.split("px")[0]);
@@ -58,15 +65,23 @@ function Carne() {
     };
 
     this.animarVertical = () => {
-        let deslocamento = 1;
+        let deslocamento = 2;
         this.setY(this.getY() - deslocamento);
     };
 
     this.animar = () => {
         this.animarVertical();
-        this.setY(490);
+        this.setY(660);
         this.setX(Math.trunc(Math.random() * 1000));
     };
+
+    this.comeuCarne = () => {
+        this.numCarne++; 
+    }
+
+    this.getQtdCarne = () => {
+        return this.numCarne;
+    }
 }
 
 function Luffy() {
@@ -139,7 +154,7 @@ function LinhaDeObstaculos(posicaoNaTela) {
     };
 }
 
-function Cenarios(posicaoNaTela) {
+function Cenarios(posicaoNaTela, BarraProgresso) {
     this.rows = [
         new LinhaDeObstaculos(posicaoNaTela),
         new LinhaDeObstaculos(posicaoNaTela),
@@ -212,6 +227,10 @@ function Cenarios(posicaoNaTela) {
                 if (row.getY() < -6 * 660) {
                     row.setY(660);
                 }
+
+                if (row.getY() === -600 && index === 10){
+                    BarraProgresso.atualizarPontos();
+                }
             }
         });
     };
@@ -230,6 +249,10 @@ function Cenarios(posicaoNaTela) {
                 if (row.getY() < -5 * 660) {
                     row.setY(2 * 660);
                 }
+
+                if (row.getY() === 80 && index === 21){
+                    BarraProgresso.atualizarPontos();
+                }
             }
         });
     };
@@ -242,6 +265,10 @@ function Cenarios(posicaoNaTela) {
 
                 if (row.getY() < -4 * 660) {
                     row.setY(3 * 660);
+                }
+
+                if (row.getY() === 700 && index === 32){
+                    BarraProgresso.atualizarPontos();
                 }
             }
         });
@@ -268,6 +295,10 @@ function Cenarios(posicaoNaTela) {
                 if (row.getY() < -3 * 660) {
                     row.setY(4 * 660);
                 }
+
+                if (row.getY() === 1380 && index === 43){
+                    BarraProgresso.atualizarPontos();
+                }
             }
         });
     };
@@ -280,7 +311,7 @@ function Cenarios(posicaoNaTela) {
                 } else if (index === 48) {
                     row.larguraObstaculos(500, 0, 400);
                 } else if (index === 44 || index === 51) {
-                    row.larguraObstaculos(300, 0, 580);
+                    row.larguraObstaculos(300, 0, 550);
                 } else {
                     row.larguraObstaculos(300, 0, 400);
                 }
@@ -289,6 +320,10 @@ function Cenarios(posicaoNaTela) {
 
                 if (row.getY() < -2 * 660) {
                     row.setY(5 * 660);
+                }
+
+                if (row.getY() === 2050 && index === 54){
+                    BarraProgresso.atualizarPontos();
                 }
             }
         });
@@ -306,12 +341,16 @@ function estaoSobrepostos(elementoA, elementoB) {
 
 function luffyAdventure() {
     const areaDoJogo = document.querySelector("#game-area");
+    const telaFinal = document.querySelector(".tela-final");
+    const pontosFinal = document.querySelector(".pontos-tela-final");
+    const carneFinal = document.querySelector(".carne-tela-final")
+    const button = document.querySelector(".button-tela-final");
 
     const luffy = new Luffy();
     const progresso = new Progresso();
     const barraEnergia = new BarraEnergia();
     const carne = new Carne();
-    const cenario = new Cenarios(1500);
+    const cenario = new Cenarios(1600, progresso);
 
     areaDoJogo.appendChild(luffy.elemento);
     areaDoJogo.appendChild(progresso.elemento);
@@ -337,10 +376,12 @@ function luffyAdventure() {
                 ) {
                     clearInterval(cenarioAnimacao);
                     barraEnergia.setEnergia(0);
-                    luffy.elemento.className = "luffy-some";
+                    telaFinal.style.zIndex = 1000;
+                    pontosFinal.innerHTML = progresso.getPontuacao();
+                    carneFinal.innerHTML = carne.getQtdCarne();
                 }
             });
-        }, 15);
+        }, 18);
 
         const carnePosition = setInterval(() => {
             carne.elemento.className = "carne";
@@ -351,7 +392,7 @@ function luffyAdventure() {
                 carne.elemento.className = "carne-some";
                 clearInterval(carnePosition);
             }
-        }, 7000);
+        }, 8000);
 
         const carneQueda = setInterval(() => {
             carne.animarVertical();
@@ -360,7 +401,7 @@ function luffyAdventure() {
                 carne.elemento.className = "carne-some";
                 clearInterval(carneQueda);
             }
-        }, 10);
+        }, 17);
 
         const game = setInterval(() => {
             luffy.animar();
@@ -368,11 +409,17 @@ function luffyAdventure() {
             if (estaoSobrepostos(luffy.elemento, carne.elemento)) {
                 barraEnergia.setEnergia(100);
                 carne.elemento.className = "carne-some";
+                carne.comeuCarne();
             }
             if (barraEnergia.getEnergia() === 0) {
                 clearInterval(game);
             }
-        }, 200);
+        }, 250);
+
+        button.addEventListener("click", (_) => {
+            window.location.reload(true);
+            telaFinal.style.zIndex = -1000;
+        });
     };
 }
 
