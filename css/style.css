@@ -80,12 +80,12 @@
     font-family: "Game";
 }
 
-.carne {
-    width: 55px;
+.carne, .star {
+    width: 50px;
     position: absolute;
 }
 
-.carne-some {
+.carne-some, .star-some {
     width: 0;
 }
 

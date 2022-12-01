@@ -28,17 +28,22 @@ function BarraEnergia() {
 }
 
 function Progresso() {
-    this.elemento = novoElemento("span", "progresso")
+    this.elemento = novoElemento("span", "progresso");
     this.pontos = -1;
-    
-    this.atualizarPontos = () => {
-        this.pontos+=1;
-        this.elemento.innerHTML = this.pontos;
-    }
-    
+
     this.getPontuacao = () => {
         return this.pontos;
-    }
+    };
+
+    this.atualizarPontos = () => {
+        this.pontos += 1;
+        this.elemento.innerHTML = this.pontos;
+    };
+
+    this.adciona10Pontos = () => {
+        this.elemento.innerHTML = this.getPontuacao() + 10;
+        this.pontos += 10;
+    };
 
     this.atualizarPontos();
 }
@@ -72,16 +77,48 @@ function Carne() {
     this.animar = () => {
         this.animarVertical();
         this.setY(660);
-        this.setX(Math.trunc(Math.random() * 1000));
+        this.setX(Math.trunc(Math.random() * 500 + 250));
     };
 
     this.comeuCarne = () => {
-        this.numCarne++; 
-    }
+        this.numCarne++;
+    };
 
     this.getQtdCarne = () => {
         return this.numCarne;
-    }
+    };
+}
+
+function Star() {
+    this.elemento = novoElemento("img", "star");
+    this.elemento.src = "./img/star2.png";
+
+    this.getX = () => {
+        return parseInt(this.elemento.style.left.split("px")[0]);
+    };
+
+    this.getY = () => {
+        return parseInt(this.elemento.style.bottom.split("px")[0]);
+    };
+
+    this.setX = (x) => {
+        this.elemento.style.left = `${x}px`;
+    };
+
+    this.setY = (y) => {
+        this.elemento.style.bottom = `${y}px`;
+    };
+
+    this.animarVertical = () => {
+        let deslocamento = 2;
+        this.setY(this.getY() - deslocamento);
+    };
+
+    this.animar = () => {
+        this.animarVertical();
+        this.setY(660);
+        this.setX(Math.trunc(Math.random() * 500 + 250));
+    };
 }
 
 function Luffy() {
@@ -119,9 +156,9 @@ function Obstaculo() {
     this.elemento = novoElemento("div", "obstaculo");
 
     this.setLargura = (largura) => {
-        if(largura === 0){
+        if (largura === 0) {
             this.elemento.style.display = "none";
-        }else {
+        } else {
             this.elemento.style.width = `${largura}px`;
         }
     };
@@ -228,7 +265,7 @@ function Cenarios(posicaoNaTela, BarraProgresso) {
                     row.setY(660);
                 }
 
-                if (row.getY() === -600 && index === 10){
+                if (row.getY() === -600 && index === 10) {
                     BarraProgresso.atualizarPontos();
                 }
             }
@@ -250,7 +287,7 @@ function Cenarios(posicaoNaTela, BarraProgresso) {
                     row.setY(2 * 660);
                 }
 
-                if (row.getY() === 80 && index === 21){
+                if (row.getY() === 80 && index === 21) {
                     BarraProgresso.atualizarPontos();
                 }
             }
@@ -267,7 +304,7 @@ function Cenarios(posicaoNaTela, BarraProgresso) {
                     row.setY(3 * 660);
                 }
 
-                if (row.getY() === 700 && index === 32){
+                if (row.getY() === 700 && index === 32) {
                     BarraProgresso.atualizarPontos();
                 }
             }
@@ -296,7 +333,7 @@ function Cenarios(posicaoNaTela, BarraProgresso) {
                     row.setY(4 * 660);
                 }
 
-                if (row.getY() === 1380 && index === 43){
+                if (row.getY() === 1380 && index === 43) {
                     BarraProgresso.atualizarPontos();
                 }
             }
@@ -322,7 +359,7 @@ function Cenarios(posicaoNaTela, BarraProgresso) {
                     row.setY(5 * 660);
                 }
 
-                if (row.getY() === 2050 && index === 54){
+                if (row.getY() === 2050 && index === 54) {
                     BarraProgresso.atualizarPontos();
                 }
             }
@@ -343,13 +380,14 @@ function luffyAdventure() {
     const areaDoJogo = document.querySelector("#game-area");
     const telaFinal = document.querySelector(".tela-final");
     const pontosFinal = document.querySelector(".pontos-tela-final");
-    const carneFinal = document.querySelector(".carne-tela-final")
+    const carneFinal = document.querySelector(".carne-tela-final");
     const button = document.querySelector(".button-tela-final");
 
     const luffy = new Luffy();
     const progresso = new Progresso();
     const barraEnergia = new BarraEnergia();
     const carne = new Carne();
+    const star = new Star();
     const cenario = new Cenarios(1600, progresso);
 
     areaDoJogo.appendChild(luffy.elemento);
@@ -366,7 +404,7 @@ function luffyAdventure() {
             cenario.passagemLivre();
             cenario.bifurcacao();
             cenario.zigZag();
-            
+
             cenario.rows.forEach((row) => {
                 if (
                     barraEnergia.getEnergia() === 0 ||
@@ -403,6 +441,26 @@ function luffyAdventure() {
             }
         }, 17);
 
+        const starPosition = setInterval(() => {
+            star.elemento.className = "star";
+            areaDoJogo.appendChild(star.elemento);
+            star.animar();
+
+            if (barraEnergia.getEnergia() === 0) {
+                star.elemento.className = "star-some";
+                clearInterval(starPosition);
+            }
+        }, 13000);
+
+        const starQueda = setInterval(() => {
+            star.animarVertical();
+
+            if (barraEnergia.getEnergia() === 0) {
+                star.elemento.className = "star-some";
+                clearInterval(starQueda);
+            }
+        }, 17);
+
         const game = setInterval(() => {
             luffy.animar();
             barraEnergia.diminuiEnergia();
@@ -411,6 +469,12 @@ function luffyAdventure() {
                 carne.elemento.className = "carne-some";
                 carne.comeuCarne();
             }
+
+            if (estaoSobrepostos(luffy.elemento, star.elemento)) {
+                progresso.adciona10Pontos();
+                star.elemento.className = "star-some";
+            }
+
             if (barraEnergia.getEnergia() === 0) {
                 clearInterval(game);
             }
