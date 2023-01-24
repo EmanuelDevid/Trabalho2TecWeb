@@ -1,16 +1,16 @@
 @font-face {
     font-family: "Game";
-    src: url("/font/rare_game/Rare\ Game.otf") format("truetype");
+    src: url("../font/rare_game/Rare\ Game.otf") format("truetype");
 }
 
 @font-face {
     font-family: "Comic";
-    src: url("/font/sf_slapstick_comic/SF\ Slapstick\ Comic\ Bold\ Oblique.ttf");
+    src: url("../font/sf_slapstick_comic/SF\ Slapstick\ Comic\ Bold\ Oblique.ttf");
 }
 
 @font-face {
     font-family: "PressStart";
-    src: url("/font/Press_Start_2P/PressStart2P-Regular.ttf");
+    src: url("../font/Press_Start_2P/PressStart2P-Regular.ttf");
 }
 
 * {
