@@ -110,7 +110,7 @@
 
 .obstaculo {
     background-color: rgb(0, 174, 255);
-    background-image: url("/img/grades.jpg");
+    background-image: url("../img/grades.jpg");
     height: 60px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -123,7 +123,7 @@
 }
 
 .tela-final {
-    background-image: url("/img/bg-sunny.jpg");
+    background-image: url("../img/bg-sunny.jpg");
     background-position: center center;
     background-size: 100%;
     width: 100%;
