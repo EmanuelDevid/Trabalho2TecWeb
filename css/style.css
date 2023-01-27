@@ -45,9 +45,9 @@
 }
 
 #game-area {
-    background-color: rgb(85, 85, 85);
-    height: 600px;
-    width: 1100px;
+    background-color: rgb(71, 64, 64);
+    height: 85%;
+    width: 80%;
     position: relative;
     overflow: hidden;
     border-color: #000;
@@ -59,7 +59,7 @@
 .luffy,
 .luffy-left {
     position: absolute;
-    width: 55px;
+    width: 3.5rem;
     bottom: 0;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .carne, .star {
-    width: 50px;
+    width: 3.5rem;
     position: absolute;
 }
 
@@ -102,7 +102,6 @@
 }
 
 .progresso-energia {
-    position: absolute;
     background-color: rgb(255, 145, 0);
     height: 100%;
     border-radius: 8px;
@@ -133,7 +132,7 @@
     justify-content: center;
     align-items: center;
     font-family: "PressStart";
-    font-size: 20px;
+    font-size: 1.2rem;
     color: rgb(4, 184, 255);
     z-index: -1000;
 }
@@ -144,19 +143,19 @@
     justify-content: space-evenly;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.6);
-    width: 700px;
-    height: 450px;
+    width: 65%;
+    height: 60%;
     border-radius: 15px;
 }
 
 .button-tela-final {
-    width: 300px;
+    width: 30%;
     padding: 15px;
-    height: 80px;
+    height: 25%;
     border-radius: 30px;
     border: none;
     font-family: "PressStart";
-    font-size: 18px;
+    font-size: 1.2rem;
     font-style: italic;
     font-weight: bolder;
     background-color: #eee;

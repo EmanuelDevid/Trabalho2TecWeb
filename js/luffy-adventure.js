@@ -76,7 +76,7 @@ function Carne() {
 
     this.animar = () => {
         this.animarVertical();
-        this.setY(660);
+        this.setY(670);
         this.setX(Math.trunc(Math.random() * 500 + 250));
     };
 
@@ -116,7 +116,7 @@ function Star() {
 
     this.animar = () => {
         this.animarVertical();
-        this.setY(660);
+        this.setY(670);
         this.setX(Math.trunc(Math.random() * 500 + 250));
     };
 }
