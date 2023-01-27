@@ -430,7 +430,7 @@ function luffyAdventure() {
                 carne.elemento.className = "carne-some";
                 clearInterval(carnePosition);
             }
-        }, 8000);
+        }, 9500);
 
         const carneQueda = setInterval(() => {
             carne.animarVertical();
@@ -478,7 +478,7 @@ function luffyAdventure() {
             if (barraEnergia.getEnergia() === 0) {
                 clearInterval(game);
             }
-        }, 250);
+        }, 350);
 
         button.addEventListener("click", (_) => {
             window.location.reload(true);
